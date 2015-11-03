@@ -18,7 +18,7 @@ public class Shape {
         setShape(Tetrominoes.NoShape);
     }
     public void setShape(Tetrominoes shape) {
-
+        //Init Matrix with figures
         coordsTable = new int[][][] {
                 { { 0, 0 },   { 0, 0 },   { 0, 0 },   { 0, 0 } },
                 { { 0, -1 },  { 0, 0 },   { -1, 0 },  { -1, 1 } },
@@ -29,7 +29,7 @@ public class Shape {
                 { { -1, -1 }, { 0, -1 },  { 0, 0 },   { 0, 1 } },
                 { { 1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } }
         };
-
+        //GET FIGURES FROM MATRIX
         for (int i = 0; i < 4 ; i++) {
             for (int j = 0; j < 2; ++j) {
                 coords[i][j] = coordsTable[shape.ordinal()][i][j];
@@ -45,12 +45,11 @@ public class Shape {
     public int y(int index) { return coords[index][1]; }
     public Tetrominoes getShape()  { return pieceShape; }
 
-    public void setRandomShape()
-    {
-        Random r = new Random();
-        int x = Math.abs(r.nextInt()) % 7 + 1;
-        Tetrominoes[] values = Tetrominoes.values();
-        setShape(values[x]);
-    }
+    //TODO Implement these methods;
+    //setRandomShape() - method
+    //minX() - method
+    //minY() - method
+    //rotateLeft - method
+    //rotateRight - method
 
 }

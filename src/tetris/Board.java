@@ -19,12 +19,12 @@ public class Board extends JPanel implements ActionListener {
     final int BoardHeight = 22;
 
     Timer timer;
-    boolean isFallingFinished = false;
+    boolean isFalled = false;
     boolean isStarted = false;
     boolean isPaused = false;
-    int numLinesRemoved = 0;
-    int curX = 0;
-    int curY = 0;
+    int linesRemoved = 0;
+    int currX = 0;
+    int currY = 0;
     JLabel statusbar;
     Shape curPiece;
     Tetrominoes[] board;
@@ -37,17 +37,15 @@ public class Board extends JPanel implements ActionListener {
         curPiece = new Shape();
         timer = new Timer(400, this);
         timer.start();
-        //TODO
-        //statusbar =  parent.getStatusBar();
+        statusbar =  parent.getStatusBar();
         board = new Tetrominoes[BoardWidth * BoardHeight];
         addKeyListener(new TAdapter());
-        //TODO
-        //clearBoard();
+        clearBoard();
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (isFallingFinished) {
-            isFallingFinished = false;
+        if (isFalled) {
+            isFalled = false;
             //newPiece();
         } else {
             //oneLineDown();
@@ -66,13 +64,18 @@ public class Board extends JPanel implements ActionListener {
             return;
 
         isStarted = true;
-        isFallingFinished = false;
-        numLinesRemoved = 0;
+        isFalled = false;
+        linesRemoved = 0;
         //TODO
         //clearBoard();
         //TODO
         //newPiece();
         timer.start();
+    }
+    private void clearBoard()
+    {
+        for (int i = 0; i < BoardHeight * BoardWidth; ++i)
+            board[i] = Tetrominoes.NoShape;
     }
 
     private boolean tryMove(Shape newPiece, int newX, int newY)
@@ -87,8 +90,8 @@ public class Board extends JPanel implements ActionListener {
         }
 
         curPiece = newPiece;
-        curX = newX;
-        curY = newY;
+        currX = newX;
+        currY = newY;
         repaint();
         return true;
     }
@@ -117,9 +120,9 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (numFullLines > 0) {
-            numLinesRemoved += numFullLines;
-            statusbar.setText(String.valueOf(numLinesRemoved));
-            isFallingFinished = true;
+            linesRemoved += numFullLines;
+            statusbar.setText(String.valueOf(linesRemoved));
+            isFalled = true;
             curPiece.setShape(Tetrominoes.NoShape);
             repaint();
         }
@@ -146,16 +149,16 @@ public class Board extends JPanel implements ActionListener {
 
             switch (keycode) {
                 case KeyEvent.VK_LEFT:
-                    tryMove(curPiece, curX - 1, curY);
+                    tryMove(curPiece, currX - 1, currY);
                     break;
                 case KeyEvent.VK_RIGHT:
-                    tryMove(curPiece, curX + 1, curY);
+                    tryMove(curPiece, currX + 1, currY);
                     break;
                 case KeyEvent.VK_DOWN:
-                    //tryMove(curPiece.rotateRight(), curX, curY);
+                    //tryMove(curPiece.rotateRight(), currX, currY);
                     break;
                 case KeyEvent.VK_UP:
-                    //tryMove(curPiece.rotateLeft(), curX, curY);
+                    //tryMove(curPiece.rotateLeft(), currX, currY);
                     break;
                 case KeyEvent.VK_SPACE:
                    // dropDown();
