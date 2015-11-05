@@ -12,8 +12,8 @@ public class Tetris extends JFrame {
 
     public Tetris() {
 
-        statusbar = new JLabel(" 0");
-        add(statusbar, BorderLayout.SOUTH);
+        statusbar = new JLabel("Scores: 0");
+        add(statusbar, BorderLayout.PAGE_START);
         Board board = new Board(this);
         add(board);
         board.start();
