@@ -45,29 +45,25 @@ public class Shape {
     public int y(int index) { return coords[index][1]; }
     public Tetrominoes getShape()  { return pieceShape; }
 
-<<<<<<< HEAD
-    public void setRandomShape()
-    {
+    public void setRandomShape() {
         Random r = new Random();
         int x = Math.abs(r.nextInt()) % 7 + 1;
         Tetrominoes[] values = Tetrominoes.values();
         setShape(values[x]);
     }
-    public int minY()
-    {
+    public int minY() {
         int m = coords[0][1];
         for (int i=0; i < 4; i++) {
             m = Math.min(m, coords[i][1]);
         }
         return m;
     }
-=======
+
     //TODO Implement these methods;
     //setRandomShape() - method
     //minX() - method
     //minY() - method
     //rotateLeft - method
     //rotateRight - method
->>>>>>> origin/master
 
 }
