@@ -46,7 +46,13 @@ public class Shape {
     public Tetrominoes getShape()  { return pieceShape; }
 
     //TODO Implement these methods;
-    //setRandomShape() - method
+    public void setRandomShape()
+    {
+        Random r = new Random();
+        int x = Math.abs(r.nextInt()) % 7 + 1;
+        Tetrominoes[] values = Tetrominoes.values(); 
+        setShape(values[x]);
+    }
     //minX() - method
     //minY() - method
     //rotateLeft - method
