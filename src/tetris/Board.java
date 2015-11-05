@@ -9,9 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-
 public class Board extends JPanel implements ActionListener {
-
 
     final int BoardWidth = 10;
     final int BoardHeight = 22;
@@ -26,8 +24,6 @@ public class Board extends JPanel implements ActionListener {
     JLabel statusbar;
     Shape curPiece;
     Tetrominoes[] board;
-
-
 
     public Board(Tetris parent) {
 
@@ -47,7 +43,7 @@ public class Board extends JPanel implements ActionListener {
             isFallingFinished = false;
             newPiece();
         } else {
-            oneLineDown();
+            //oneLineDown();
         }
     }
 
@@ -113,28 +109,14 @@ public class Board extends JPanel implements ActionListener {
                 break;
             --newY;
         }
-        pieceDropped();
+        //pieceDropped();
     }
-    private void oneLineDown() {
-        if (!tryMove(curPiece, curX, curY - 1))
-            pieceDropped();
-    }
+    //TODO oneLineDown()
     private void clearBoard() {
         for (int i = 0; i < BoardHeight * BoardWidth; ++i)
             board[i] = Tetrominoes.NoShape;
     }
-    private void pieceDropped(){
-        for (int i = 0; i < 4; ++i) {
-            int x = curX + curPiece.x(i);
-            int y = curY - curPiece.y(i);
-            board[(y * BoardWidth) + x] = curPiece.getShape();
-        }
-
-        removeFullLines();
-
-        if (!isFallingFinished)
-            newPiece();
-    }
+    //TODO pieceDropped()
     private void newPiece() {
         curPiece.setRandomShape();
         curX = BoardWidth / 2 + 1;
@@ -194,7 +176,7 @@ public class Board extends JPanel implements ActionListener {
         }
     }
     private void drawSquare(Graphics g, int x, int y, Tetrominoes shape) {
-        Color colors[] = { new Color(0, 0, 0), new Color(204, 102, 102),
+        Color colors[] = { new Color(40, 100, 255), new Color(204, 102, 102),
                 new Color(102, 204, 102), new Color(102, 102, 204),
                 new Color(204, 204, 102), new Color(204, 102, 204),
                 new Color(102, 204, 204), new Color(218, 170, 0)
@@ -222,9 +204,7 @@ public class Board extends JPanel implements ActionListener {
             if (!isStarted || curPiece.getShape() == Tetrominoes.NoShape) {
                 return;
             }
-
             int keycode = e.getKeyCode();
-
             if (keycode == 'p' || keycode == 'P') {
                 pause();
                 return;
@@ -252,10 +232,10 @@ public class Board extends JPanel implements ActionListener {
                     dropDown();
                     break;
                 case 'd':
-                    oneLineDown();
+                    //oneLineDown();
                     break;
                 case 'D':
-                    oneLineDown();
+                    //oneLineDown();
                     break;
             }
 
