@@ -215,7 +215,7 @@ public class Board extends JPanel implements ActionListener {
                 //pause();
                 return;
             }
-
+                //SOME CHANGES
             if (isPaused)
                 return;
 
