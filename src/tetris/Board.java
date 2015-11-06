@@ -43,7 +43,7 @@ public class Board extends JPanel implements ActionListener {
             isFallingFinished = false;
             newPiece();
         } else {
-            //oneLineDown();
+            oneLineDown();
         }
     }
 
@@ -111,12 +111,28 @@ public class Board extends JPanel implements ActionListener {
         }
         //pieceDropped();
     }
-    //TODO oneLineDown()
     private void clearBoard() {
         for (int i = 0; i < BoardHeight * BoardWidth; ++i)
             board[i] = Tetrominoes.NoShape;
     }
-    //TODO pieceDropped()
+    private void oneLineDown()
+    {
+        if (!tryMove(curPiece, curX, curY - 1))
+            pieceDropped();
+    }
+    private void pieceDropped()
+    {
+        for (int i = 0; i < 4; ++i) {
+            int x = curX + curPiece.x(i);
+            int y = curY - curPiece.y(i);
+            board[(y * BoardWidth) + x] = curPiece.getShape();
+        }
+
+        removeFullLines();
+
+        if (!isFallingFinished)
+            newPiece();
+    }
     private void newPiece() {
         curPiece.setRandomShape();
         curX = BoardWidth / 2 + 1;

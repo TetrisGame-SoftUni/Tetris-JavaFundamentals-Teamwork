@@ -74,8 +74,6 @@ public class Shape {
         return m;
     }
 
-
-    //minX() - method
     public int minX()
     {
         int m = coords[0][0];
@@ -85,9 +83,6 @@ public class Shape {
         return m;
     }
 
-
-
-    //rotateRight - method
     public Shape rotateRight()
     {
         if (pieceShape == Tetrominoes.SquareShape)
@@ -102,6 +97,4 @@ public class Shape {
         }
         return result;
     }
-
-
 }
