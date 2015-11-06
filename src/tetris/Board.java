@@ -13,7 +13,7 @@ public class Board extends JPanel implements ActionListener {
 
     final int BoardWidth = 10;
     final int BoardHeight = 22;
-
+    private Image imageBackground;
     Timer timer;
     boolean isFallingFinished = false;
     boolean isStarted = false;
@@ -26,7 +26,7 @@ public class Board extends JPanel implements ActionListener {
     Tetrominoes[] board;
 
     public Board(Tetris parent) {
-
+        initBoard();
         setFocusable(true);
         this.curPiece = new Shape();
         this.timer = new Timer(400, this);
@@ -37,7 +37,21 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         clearBoard();
     }
-
+    private void initBoard() {
+        loadImage();
+        int width = imageBackground.getWidth(this);
+        int height = imageBackground.getHeight(this);
+        setPreferredSize(new Dimension(width, height));
+    }
+    //Load image
+    private void loadImage() {
+        ImageIcon ii = new ImageIcon("res/image.jpg");
+        imageBackground = ii.getImage();
+    }
+    @Override //Slice image
+    public void paintComponent(Graphics g) {
+        g.drawImage(imageBackground, 0, 0, null);
+    }
     public void actionPerformed(ActionEvent e) {
         if (isFallingFinished) {
             isFallingFinished = false;
@@ -115,13 +129,11 @@ public class Board extends JPanel implements ActionListener {
         for (int i = 0; i < this.BoardHeight * this.BoardWidth; ++i)
             this.board[i] = Tetrominoes.NoShape;
     }
-    private void oneLineDown()
-    {
+    private void oneLineDown() {
         if (!tryMove(this.curPiece, this.curX, this.curY - 1))
             pieceDropped();
     }
-    private void pieceDropped()
-    {
+    private void pieceDropped() {
         for (int i = 0; i < 4; ++i) {
             int x = this.curX + this.curPiece.x(i);
             int y = this.curY - this.curPiece.y(i);
@@ -142,7 +154,7 @@ public class Board extends JPanel implements ActionListener {
             this.curPiece.setShape(Tetrominoes.NoShape);
             this.timer.stop();
             this.isStarted = false;
-            this.statusbar.setText("game over");
+            this.statusbar.setText("Game Over");
         }
     }
     private boolean tryMove(Shape newPiece, int newX, int newY) {
@@ -191,7 +203,6 @@ public class Board extends JPanel implements ActionListener {
             repaint();
         }
     }
-
     private void drawSquare(Graphics g, int x, int y, Tetrominoes shape) {
         Color colors[] = { new Color(40, 100, 255), new Color(204, 102, 102),
                 new Color(102, 204, 102), new Color(102, 102, 204),
