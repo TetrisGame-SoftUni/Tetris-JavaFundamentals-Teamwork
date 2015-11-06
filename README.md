@@ -1,3 +1,3 @@
 # Tetris-JavaFundamentals-Teamwork
 
-A basic Tetris games make for TeamProject in SoftUni (https://softuni.bg/)
+A basic Tetris game make in Java for TeamProject in SoftUni (https://softuni.bg/)
