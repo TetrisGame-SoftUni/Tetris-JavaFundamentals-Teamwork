@@ -51,6 +51,21 @@ public class Shape {
         Tetrominoes[] values = Tetrominoes.values();
         setShape(values[x]);
     }
+    public Shape rotateLeft()
+    {
+        if (pieceShape == Tetrominoes.SquareShape)
+            return this;
+
+        Shape result = new Shape();
+        result.pieceShape = pieceShape;
+
+        for (int i = 0; i < 4; ++i) {
+            result.setX(i, y(i));
+            result.setY(i, -x(i));
+        }
+        return result;
+    }
+
     public int minY() {
         int m = coords[0][1];
         for (int i=0; i < 4; i++) {
@@ -59,11 +74,34 @@ public class Shape {
         return m;
     }
 
-    //TODO Implement these methods;
-    //setRandomShape() - method
+
     //minX() - method
-    //minY() - method
-    //rotateLeft - method
+    public int minX()
+    {
+        int m = coords[0][0];
+        for (int i=0; i < 4; i++) {
+            m = Math.min(m, coords[i][0]);
+        }
+        return m;
+    }
+
+
+
     //rotateRight - method
+    public Shape rotateRight()
+    {
+        if (pieceShape == Tetrominoes.SquareShape)
+            return this;
+
+        Shape result = new Shape();
+        result.pieceShape = pieceShape;
+
+        for (int i = 0; i < 4; ++i) {
+            result.setX(i, -y(i));
+            result.setY(i, x(i));
+        }
+        return result;
+    }
+
 
 }
