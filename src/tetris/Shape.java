@@ -4,13 +4,11 @@ import java.util.Random;
 
 public class Shape {
 
-    public enum Tetrominoes { NoShape, ZShape, SShape, LineShape,
-        TShape, SquareShape, LShape, MirroredLShape };
-
     private Tetrominoes pieceShape;
     private int[][] coords;
     private int[][][] coordsTable;
-
+    public enum Tetrominoes { NoShape, ZShape, SShape, LineShape,
+        TShape, SquareShape, LShape, MirroredLShape };
 
     public Shape() {
 
