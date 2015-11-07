@@ -45,7 +45,7 @@ public class Board extends JPanel implements ActionListener {
     }
     //Load image
     private void loadImage() {
-        ImageIcon ii = new ImageIcon("res/image.jpg");
+        ImageIcon ii = new ImageIcon("res/Tetris.jpg");
         imageBackground = ii.getImage();
     }
     @Override //Slice image
