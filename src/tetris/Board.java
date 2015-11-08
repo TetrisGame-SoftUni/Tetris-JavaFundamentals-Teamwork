@@ -260,6 +260,7 @@ public class Board extends JPanel implements ActionListener {
                     break;
                 case KeyEvent.VK_R:
                     start();
+                    statusBar.setText("Score: 0");
                     break;
             }
 
