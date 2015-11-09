@@ -7,13 +7,15 @@ public class Shape {
     private Tetrominoes pieceShape;
     private int[][] coords;
     private int[][][] coordsTable;
-    public enum Tetrominoes { NoShape, ZShape, SShape, LineShape,
-        TShape, SquareShape, LShape, MirroredLShape };
+    public enum Tetrominoes {
+        NOSHAPE, ZSHAPE, SSHAPE, LINESHAPE,
+        TSHAPE, SQUARESHAPE, LSHAPE, MIRROREDLSHAPE
+    };
 
     public Shape() {
 
         coords = new int[4][2];
-        setShape(Tetrominoes.NoShape);
+        setShape(Tetrominoes.NOSHAPE);
     }
     public void setShape(Tetrominoes shape) {
         //Init Matrix with figures
@@ -63,7 +65,7 @@ public class Shape {
 
     public Shape rotateShape()
     {
-        if (pieceShape == Tetrominoes.SquareShape)
+        if (pieceShape == Tetrominoes.SQUARESHAPE)
             return this;
 
         Shape result = new Shape();
