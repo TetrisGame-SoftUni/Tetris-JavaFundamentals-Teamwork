@@ -146,15 +146,15 @@ public class Board extends JPanel implements ActionListener {
             newPiece();
     }
     private void newPiece() {
-        this.curPiece.setRandomShape();
-        this.currX = BOARD_CELL_WIDTH / 2 + 1;
-        this.currY = BOARD_CELL_HEIGHT - 1 + curPiece.minY();
+        curPiece.setRandomShape();
+        currX = BOARD_CELL_WIDTH / 2 + 1;
+        currY = BOARD_CELL_HEIGHT - 1 + curPiece.minY();
 
-        if (!tryMove(this.curPiece, this.currX, this.currY)) {
-            this.curPiece.setShape(Tetrominoes.NOSHAPE);
-            this.mainTimer.stop();
-            this.isStarted = false;
-            this.statusBar.setText("Game Over! Your score is: "+String.valueOf(numLinesRemoved));
+        if (!tryMove(this.curPiece, currX, currY)) {
+            curPiece.setShape(Tetrominoes.NOSHAPE);
+            statusBar.setText("Game Over! Your score is: "+String.valueOf(numLinesRemoved));
+            mainTimer.stop();
+            isStarted = false;
         }
     }
     private boolean tryMove(Shape newPiece, int newX, int newY) {
@@ -185,9 +185,8 @@ public class Board extends JPanel implements ActionListener {
                     break;
                 }
             }
-
             if (lineIsFull) {
-                ++numFullLines;
+                numFullLines++;
                 for (int k = i; k < this.BOARD_CELL_HEIGHT - 1; ++k) {
                     for (int j = 0; j < this.BOARD_CELL_WIDTH; ++j)
                         this.board[(k * this.BOARD_CELL_WIDTH) + j] = shapeAt(j, k + 1);
