@@ -204,10 +204,10 @@ public class Board extends JPanel implements ActionListener {
         }
     }
     private void drawSquare(Graphics g, int x, int y, Tetrominoes shape) {
-        Color colors[] = { new Color(40, 100, 255), new Color(204, 102, 102),
-                new Color(102, 204, 102), new Color(102, 102, 204),
-                new Color(204, 204, 102), new Color(204, 102, 204),
-                new Color(102, 204, 204), new Color(218, 170, 0)
+        Color colors[] = {  new Color(33, 65, 198), new Color(215, 15, 55),
+                            new Color(89, 177, 1), new Color(255, 227, 2),
+                            new Color(33, 65, 198), new Color(204, 102, 204),
+                            new Color(227, 91, 2), new Color(255, 15, 139)
         };
 
 
