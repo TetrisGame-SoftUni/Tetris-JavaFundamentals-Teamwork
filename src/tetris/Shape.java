@@ -2,23 +2,32 @@ package tetris;
 
 import java.util.Random;
 
+ /*
+ *
+ * */
+
 public class Shape {
 
-    private Tetrominoes pieceShape;
-    private int[][] coords;
-    private int[][][] coordsTable;
-    public enum Tetrominoes {
-        NOSHAPE, ZSHAPE, SSHAPE, LINESHAPE,
-        TSHAPE, SQUARESHAPE, LSHAPE, MIRROREDLSHAPE
+    private Tetrominoes pieceShape;                     //Current piece shape.
+    private int[][] coords;                             //actual coordinates of a tetris piece.
+    private int[][][] coordsTable;                      //holds all possible coordinate values of our tetris pieces.
+    public enum Tetrominoes {                           //enum with all pieces.
+        NoShape, ZShape, SShape, LineShape,
+        TShape, SquareShape, LShape, MirroredLShape
     };
 
-    public Shape() {
-
+    public Shape() {                                    //To start game we set NoShape shape first.
         coords = new int[4][2];
-        setShape(Tetrominoes.NOSHAPE);
+        setShape(Tetrominoes.NoShape);
     }
-    public void setShape(Tetrominoes shape) {
-        //Init Matrix with figures
+    private void setX(int index, int x) {
+        coords[index][0] = x;
+    }
+
+    private void setY(int index, int y) {
+        coords[index][1] = y;
+    }
+    public void setShape(Tetrominoes shape) {           //Initialize Matrix with figures.
         coordsTable = new int[][][] {
                 { { 0, 0 },   { 0, 0 },   { 0, 0 },   { 0, 0 } },
                 { { 0, -1 },  { 0, 0 },   { -1, 0 },  { -1, 1 } },
@@ -29,7 +38,7 @@ public class Shape {
                 { { -1, -1 }, { 0, -1 },  { 0, 0 },   { 0, 1 } },
                 { { 1, -1 },  { 0, -1 },  { 0, 0 },   { 0, 1 } }
         };
-        //GET FIGURES FROM MATRIX
+                                                        //Find Shapes from matrix.
         for (int i = 0; i < 4 ; i++) {
             for (int j = 0; j < 2; ++j) {
                 coords[i][j] = coordsTable[shape.ordinal()][i][j];
@@ -38,47 +47,42 @@ public class Shape {
         pieceShape = shape;
 
     }
-    private void setX(int index, int x) {
-        coords[index][0] = x;
+    public Tetrominoes getShape()  {
+        return pieceShape;
     }
 
-    private void setY(int index, int y) {
-        coords[index][1] = y;
-    }
+    //Get Coordinates x y
     public int x(int index) {
         return coords[index][0];
     }
     public int y(int index) {
         return coords[index][1];
     }
-    public Tetrominoes getShape()  {
-        return pieceShape;
-    }
 
-    public void setRandomShape() {
+    public void setRandomShape() {                      //set shape by Random
         Random r = new Random();
         int x = Math.abs(r.nextInt()) % 7 + 1;
         Tetrominoes[] values = Tetrominoes.values();
         setShape(values[x]);
     }
 
-
-    public Shape rotateShape()
+    public Shape rotateShape()                          //rotate the shape
     {
-        if (pieceShape == Tetrominoes.SQUARESHAPE)
+        if (pieceShape == Tetrominoes.SquareShape)      //if it is square no need to rotate
             return this;
 
         Shape result = new Shape();
         result.pieceShape = pieceShape;
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 4; ++i) {                   //Change coordinates
             result.setX(i, -y(i));
             result.setY(i, x(i));
         }
         return result;
     }
 
-    public int minY() {
+
+    public int minY() {                                 //Get minimal free row
         int m = coords[0][1];
         for (int i=0; i < 4; i++) {
             m = Math.min(m, coords[i][1]);

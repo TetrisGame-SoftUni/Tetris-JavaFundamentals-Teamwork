@@ -7,13 +7,13 @@ import java.awt.event.*;
 
 public class Board extends JPanel implements ActionListener {
 
-    private final int BOARD_CELL_WIDTH = 10;
-    private final int BOARD_CELL_HEIGHT = 22;
-    private Image imageBackground;
+    private final int BOARD_CELL_WIDTH = 10;                                    //Board columns
+    private final int BOARD_CELL_HEIGHT = 22;                                   //Board rows
+    private Image imageBackground;                                              //Background Image
     private boolean isFalled = false;
     private boolean isStarted = false;
     private boolean isPaused = false;
-    private int numLinesRemoved = 0;
+    private int numLinesRemoved = 0;                                            //Contains the points
     private int currX = 0;
     private int currY = 0;
 
@@ -26,18 +26,17 @@ public class Board extends JPanel implements ActionListener {
         initBoard();
         setFocusable(true);
         this.curPiece = new Shape();
-        this.mainTimer = new Timer(400, this);
-        this.mainTimer.start();
-        this.setBackground(Color.GRAY);
+        this.mainTimer = new Timer(400, this);                                  //Drop speed
+        this.mainTimer.start();                                                 //Start dropping
         this.statusBar =  parent.getStatusBar();
-        this.board = new Tetrominoes[BOARD_CELL_WIDTH * BOARD_CELL_HEIGHT];
-        addKeyListener(new TAdapter());
-        clearBoard();
+        this.board = new Tetrominoes[BOARD_CELL_WIDTH * BOARD_CELL_HEIGHT];     //Board size
+        addKeyListener(new TAdapter());                                         //Keyboard adapter
+        clearBoard();                                                           //Clear all board
     }
     int squareWidth() {
-        return 30; }
+        return 30; }                                                     //Square width and height size
     int squareHeight() {
-        return 30; }
+        return 30; }                                                    //Square width and height size
 
     Tetrominoes shapeAt(int x, int y) {
         return board[(y * BOARD_CELL_WIDTH) + x]; }
@@ -51,23 +50,23 @@ public class Board extends JPanel implements ActionListener {
         clearBoard();
         newPiece();
         this.mainTimer.start();
-    }
+    }                                                   //Set initial values and start main timer
 
     private void initBoard() {
         loadImage();
         int width = imageBackground.getWidth(this);
         int height = imageBackground.getHeight(this);
         setPreferredSize(new Dimension(width, height));
-    }
-    //Load image
+    }                                              //Get size for background
     private void loadImage() {
         ImageIcon ii = new ImageIcon("res/background.png");
         imageBackground = ii.getImage();
-    }
-    @Override //Slice image
+}                                              //Load custom background
+    @Override
     public void paintComponent(Graphics g) {
+
         g.drawImage(imageBackground, 0, 0, null);
-    }
+    }                                //Override default background
     public void actionPerformed(ActionEvent e) {
         if (isFalled) {
             isFalled = false;
@@ -75,7 +74,7 @@ public class Board extends JPanel implements ActionListener {
         } else {
             oneLineDown();
         }
-    }
+    }                            //Main Action if piece fall down create new piece
     private void pause() {
         if (!isStarted)
             return;
@@ -89,7 +88,7 @@ public class Board extends JPanel implements ActionListener {
             this.statusBar.setText("Score: "+String.valueOf(numLinesRemoved));
         }
         repaint();
-    }
+    }                                                  //Pause the game
     public void paint(Graphics g) {
         super.paint(g);
 
@@ -100,13 +99,13 @@ public class Board extends JPanel implements ActionListener {
         for (int i = 0; i < this.BOARD_CELL_HEIGHT; ++i) {
             for (int j = 0; j < this.BOARD_CELL_WIDTH; ++j) {
                 Tetrominoes shape = shapeAt(j, this.BOARD_CELL_HEIGHT - i - 1);
-                if (shape != Tetrominoes.NOSHAPE)
+                if (shape != Tetrominoes.NoShape)
                     drawSquare(g, 0 + j * squareWidth(),
                             boardTop + i * squareHeight(), shape);
             }
         }
 
-        if (curPiece.getShape() != Tetrominoes.NOSHAPE) {
+        if (curPiece.getShape() != Tetrominoes.NoShape) {
             for (int i = 0; i < 4; ++i) {
                 int x = this.currX + this.curPiece.x(i);
                 int y = this.currY - this.curPiece.y(i);
@@ -115,7 +114,7 @@ public class Board extends JPanel implements ActionListener {
                         this.curPiece.getShape());
             }
         }
-    }
+    }                                         //Set color to different shapes
     private void dropDown() {
         int newY = this.currY;
         while (newY > 0) {
@@ -127,7 +126,7 @@ public class Board extends JPanel implements ActionListener {
     }
     private void clearBoard() {
         for (int i = 0; i < this.BOARD_CELL_HEIGHT * this.BOARD_CELL_WIDTH; ++i)
-            this.board[i] = Tetrominoes.NOSHAPE;
+            this.board[i] = Tetrominoes.NoShape;
     }
     private void oneLineDown() {
         if (!tryMove(this.curPiece, this.currX, this.currY - 1))
@@ -151,7 +150,7 @@ public class Board extends JPanel implements ActionListener {
         currY = BOARD_CELL_HEIGHT - 1 + curPiece.minY();
 
         if (!tryMove(this.curPiece, currX, currY)) {
-            curPiece.setShape(Tetrominoes.NOSHAPE);
+            curPiece.setShape(Tetrominoes.NoShape);
             statusBar.setText("Game Over! Your score is: "+String.valueOf(numLinesRemoved));
             mainTimer.stop();
             isStarted = false;
@@ -163,7 +162,7 @@ public class Board extends JPanel implements ActionListener {
             int y = newY - newPiece.y(i);
             if (x < 0 || x >= this.BOARD_CELL_WIDTH || y < 0 || y >= this.BOARD_CELL_HEIGHT)
                 return false;
-            if (shapeAt(x, y) != Tetrominoes.NOSHAPE)
+            if (shapeAt(x, y) != Tetrominoes.NoShape)
                 return false;
         }
 
@@ -180,7 +179,7 @@ public class Board extends JPanel implements ActionListener {
             boolean lineIsFull = true;
 
             for (int j = 0; j < this.BOARD_CELL_WIDTH; ++j) {
-                if (shapeAt(j, i) == Tetrominoes.NOSHAPE) {
+                if (shapeAt(j, i) == Tetrominoes.NoShape) {
                     lineIsFull = false;
                     break;
                 }
@@ -195,10 +194,10 @@ public class Board extends JPanel implements ActionListener {
         }
 
         if (numFullLines > 0) {
-            this.numLinesRemoved += numFullLines;
+            this.numLinesRemoved += numFullLines*10;
             this.statusBar.setText("Score: "+String.valueOf(numLinesRemoved));
             this.isFalled = true;
-            this.curPiece.setShape(Tetrominoes.NOSHAPE);
+            this.curPiece.setShape(Tetrominoes.NoShape);
             repaint();
         }
     }
@@ -228,7 +227,7 @@ public class Board extends JPanel implements ActionListener {
     class TAdapter extends KeyAdapter {
         public void keyPressed(KeyEvent e) {
 
-            if (!isStarted || curPiece.getShape() == Tetrominoes.NOSHAPE) {
+            if (!isStarted || curPiece.getShape() == Tetrominoes.NoShape) {
                 return;
             }
 
