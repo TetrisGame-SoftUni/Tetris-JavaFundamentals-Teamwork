@@ -51,30 +51,6 @@ public class Board extends JPanel implements ActionListener {
         newPiece();
         this.mainTimer.start();
     }                                                   //Set initial values and start main timer
-
-    private void initBoard() {
-        loadImage();
-        int width = imageBackground.getWidth(this);
-        int height = imageBackground.getHeight(this);
-        setPreferredSize(new Dimension(width, height));
-    }                                              //Get size for background
-    private void loadImage() {
-        ImageIcon ii = new ImageIcon("res/background.png");
-        imageBackground = ii.getImage();
-}                                              //Load custom background
-    @Override
-    public void paintComponent(Graphics g) {
-
-        g.drawImage(imageBackground, 0, 0, null);
-    }                                //Override default background
-    public void actionPerformed(ActionEvent e) {
-        if (isFalled) {
-            isFalled = false;
-            newPiece();
-        } else {
-            oneLineDown();
-        }
-    }                            //Main Action if piece fall down create new piece
     private void pause() {
         if (!isStarted)
             return;
@@ -89,6 +65,30 @@ public class Board extends JPanel implements ActionListener {
         }
         repaint();
     }                                                  //Pause the game
+
+    private void initBoard() {
+        loadImage();
+        int width = imageBackground.getWidth(this);
+        int height = imageBackground.getHeight(this);
+        setPreferredSize(new Dimension(width, height));
+    }                                              //Get size for background
+    private void loadImage() {
+        ImageIcon ii = new ImageIcon("res/background.png");
+        imageBackground = ii.getImage();
+}                                              //Load custom background
+
+    public void paintComponent(Graphics g) {
+
+        g.drawImage(imageBackground, 0, 0, null);
+    }                                //Override default background
+    public void actionPerformed(ActionEvent e) {
+        if (isFalled) {
+            isFalled = false;
+            newPiece();
+        } else {
+            oneLineDown();
+        }
+    }                            //Main Action if piece fall down create new piece
     public void paint(Graphics g) {
         super.paint(g);
 
@@ -115,47 +115,48 @@ public class Board extends JPanel implements ActionListener {
             }
         }
     }                                         //Set color to different shapes
+
     private void dropDown() {
         int newY = this.currY;
         while (newY > 0) {
             if (!tryMove(this.curPiece, this.currX, newY - 1))
                 break;
-            --newY;
+            newY--;
         }
         pieceDropped();
-    }
+    }                                               //When hit Space drop the shape down as possible
     private void clearBoard() {
         for (int i = 0; i < this.BOARD_CELL_HEIGHT * this.BOARD_CELL_WIDTH; ++i)
             this.board[i] = Tetrominoes.NoShape;
-    }
+    }                                             //Clear all board
     private void oneLineDown() {
         if (!tryMove(this.curPiece, this.currX, this.currY - 1))
             pieceDropped();
-    }
+    }                                            //One line down
     private void pieceDropped() {
         for (int i = 0; i < 4; ++i) {
             int x = this.currX + this.curPiece.x(i);
             int y = this.currY - this.curPiece.y(i);
             this.board[(y * this.BOARD_CELL_WIDTH) + x] = this.curPiece.getShape();
         }
-
+        this.numLinesRemoved+=4;
+        this.statusBar.setText("Score: "+String.valueOf(numLinesRemoved));
         removeFullLines();
 
         if (!this.isFalled)
             newPiece();
-    }
+    }                                           //Piece dropped
     private void newPiece() {
         curPiece.setRandomShape();
         currX = BOARD_CELL_WIDTH / 2 + 1;
         currY = BOARD_CELL_HEIGHT - 1 + curPiece.minY();
-
         if (!tryMove(this.curPiece, currX, currY)) {
             curPiece.setShape(Tetrominoes.NoShape);
             statusBar.setText("Game Over! Your score is: "+String.valueOf(numLinesRemoved));
             mainTimer.stop();
             isStarted = false;
         }
-    }
+    }                                               //Generate New Piece
     private boolean tryMove(Shape newPiece, int newX, int newY) {
         for (int i = 0; i < 4; ++i) {
             int x = newX + newPiece.x(i);

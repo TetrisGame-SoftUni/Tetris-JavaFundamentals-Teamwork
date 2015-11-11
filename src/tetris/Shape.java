@@ -2,10 +2,6 @@ package tetris;
 
 import java.util.Random;
 
- /*
- *
- * */
-
 public class Shape {
 
     private Tetrominoes pieceShape;                     //Current piece shape.
@@ -23,7 +19,6 @@ public class Shape {
     private void setX(int index, int x) {
         coords[index][0] = x;
     }
-
     private void setY(int index, int y) {
         coords[index][1] = y;
     }
@@ -51,23 +46,20 @@ public class Shape {
         return pieceShape;
     }
 
-    //Get Coordinates x y
+
     public int x(int index) {
         return coords[index][0];
-    }
+    }    //Get Coordinates x y
     public int y(int index) {
         return coords[index][1];
-    }
-
+    }    //Get Coordinates x y
     public void setRandomShape() {                      //set shape by Random
         Random r = new Random();
-        int x = Math.abs(r.nextInt()) % 7 + 1;
+        int x = Math.abs(r.nextInt()) % 7+1;
         Tetrominoes[] values = Tetrominoes.values();
         setShape(values[x]);
     }
-
-    public Shape rotateShape()                          //rotate the shape
-    {
+    public Shape rotateShape() {
         if (pieceShape == Tetrominoes.SquareShape)      //if it is square no need to rotate
             return this;
 
@@ -79,9 +71,7 @@ public class Shape {
             result.setY(i, x(i));
         }
         return result;
-    }
-
-
+}                        //Rotate the shape
     public int minY() {                                 //Get minimal free row
         int m = coords[0][1];
         for (int i=0; i < 4; i++) {
